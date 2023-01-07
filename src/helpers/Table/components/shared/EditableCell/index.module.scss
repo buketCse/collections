@@ -1,0 +1,23 @@
+.editableCell {
+  height: 100%;
+  width: 100%;
+  background: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 100%;
+  width: 100%;
+}
+
+.icon {
+  margin-right: 3px;
+}
+
+.catalogIcon {
+  font-size: 1.1em;
+}
