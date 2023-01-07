@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import GridView from '../../helpers/GridView'
 import moment from 'moment'
+import { faker } from '@faker-js/faker';
 
 function CollectionView(props){
 
@@ -8,25 +9,16 @@ function CollectionView(props){
         const {
           row: {
             depth,
-            original = {},
-            original: { IsLeaf = false }
+            // original = {},
+            // original: { IsLeaf = false }
           },
           column: { id: columnId}
         } = cell
-        if (columnId === 'Name') {
+        if (columnId === 'Product') {
           return (
             <div className="d-flex align-items-center" style={{ marginLeft: 15 * depth }}>
-              {/* {!IsLeaf && <span>{getExpanderCell(cell)}</span>} */}
+              <span><img style={{height:'60px'}} src={faker2.image.food()} alt={faker.commerce.productDescription()} /></span>
               <span style={{ marginLeft: '2px' }}> {cell.value}</span>
-            </div>
-          )
-        } else if (columnId === 'CreateTime') {
-          return (
-            <div className="d-flex align-items-center">
-              <span style={{ marginLeft: '2px' }}>
-                {' '}
-                {cell.value ? moment(cell.value).format('DD.MM.YYYY') : ''}
-              </span>
             </div>
           )
         } else {
@@ -41,37 +33,40 @@ function CollectionView(props){
     const columns = useMemo(
         () => [
           {
-            accessor: 'Name',
-            Header: 'Name',
+            accessor: 'Product',
+            Header: 'Product',
             sortable: true,
             width: 280,
+            height:60,
             Cell: getCell
           },
           {
             // AvailableStatus,
-            accessor: 'Status',
-            Header: 'Status',
+            accessor: 'Summary',
+            Header: 'Summary',
             sortable: true,
             width: 100,
+            height:60,
             Cell: getCell
           },
           {
-            accessor: 'Description',
-            Header: 'Description',
+            accessor: 'Term-1',
+            Header: 'Term-1',
             sortable: true,
             width: 100,
+            height:60,
             Cell: getCell
           },
           {
-            accessor: 'UserName',
-            Header: 'User Name',
+            accessor: 'Term-2',
+            Header: 'Term-2',
             sortable: true,
             width: 150,
             Cell: getCell
           },
           {
-            accessor: 'CreateTime',
-            Header: 'Create Time',
+            accessor: 'Term-3',
+            Header: 'Term-3',
             sortable: true,
             width: 100,
             Cell: getCell
@@ -79,34 +74,22 @@ function CollectionView(props){
         ],
         []
       )
+    let products= []
+    let i = 0
+      for(i=0; i < 10; i++){
+        let newObj={Product:faker.commerce.productName(),Summary:faker.commerce.price()}
+        products.push(newObj)
+      }
+      console.log('products',products)
+      const faker2=faker
+debugger
 
-      const MainNode = useMemo(
-        () => [
-          {
-            Name: 'All Assortments',
-            Description: '',
-            UserName: '',
-            Status: 'FOLDER',
-            Id: 0,
-            CreateTime: null,
-            Children:[],
-            // Children: _.isNil(recentAssortments) ? [Root] : _.concat(recentAssortments, Root),
-            MainNode: true,
-            nodeType: 0
-          }
-        ],
-        []
-        // [Root]
-      )
-
-    const gridView= <GridView
+    return (<GridView
     rowSelection
     className="Table tableHover"
     enableGlobalFilter
     columns={columns}
-    data={MainNode}
-    // getRowStyle={(row) => getRowStyle(row, selectedCurrentScenario)}
-    // getCellClass={getCellClass}
+    data={products}
     globalFilterStyle={{
       borderWidth: '0px',
       fontFamily: 'Roboto,Arial,Helvetica,sans-serif',
@@ -114,15 +97,8 @@ function CollectionView(props){
       padding: '3px 7px',
       width: '100%'
     }}
-    getSubRows={(row) => row.Children}
-    // initialState={{
-    //   expanded: expandedRows
-    // }}
-    // rowClicked={handleRowClicked}
     theme="bs5"
-  />
-
-    return gridView
+  />)
 }
 
 export default CollectionView
