@@ -83,7 +83,7 @@ function CollectionView(props){
       const MainNode = useMemo(
         () => [
           {
-            Name: 'All Assortments',
+            Name: 'Collections',
             Description: '',
             UserName: '',
             Status: 'FOLDER',
